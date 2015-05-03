@@ -1,0 +1,50 @@
+{
+	"manifest_version": 2,
+
+	"name": "CSCI4140",
+	"description": "CSCI4140 asg3.",
+	"version": "1.4",
+	"author": "XING Yue",
+  
+	"background": {
+		"scripts":
+		[
+			"jquery-2.1.1.min.js",
+			"background.js"
+		]
+	},
+  
+	"content_scripts": [
+		{
+			"matches": 
+			[
+				"*://*.rhcloud.com/*",
+				"*://localhost:*/*"
+			],	
+			
+			"js": 
+			[
+				"ocrad.js",
+				"jquery-2.1.1.min.js",
+				"myContentScript.js"
+			],
+			"run_at":"document_idle"
+		}
+	],
+	
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	},
+	
+	"icons": { "16": "icon16.png",
+           "48": "icon48.png",
+          "128": "icon128.png" },
+	"browser_action":{
+	 "default_icon":"icon16.png",
+	"default_popup": "popup.html"
+	},
+	"permissions":[	"activeTab",	
+				"storage","tabs"]
+}
+
