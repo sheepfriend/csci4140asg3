@@ -23,7 +23,7 @@
 /* Background script runs from here */
 
 console.log("Background runs!");
-names=['form_id','login_id','login_name','pass_id','pass_name','cap_id','cap_input','filling'];
+names=['form_id','login_id','login_name','pass_id','pass_name','cap_id','cap_input','filling','error','suc'];
 var content;
 chrome.storage.local.get(names,function(items){
 	console.log("load successfully");
@@ -32,12 +32,15 @@ chrome.storage.local.get(names,function(items){
 console.log(content);
 
 chrome.runtime.onMessage.addListener(function(request, sender,send){
+	console.log(request);
 	if (request.type=="save") {
 		console.log(request);
 		chrome.storage.local.set(request,function(){console.log("save successfully")});
 		content=request;
 	}
 	if (request.type=="init") {
+		console.log('send');
+		console.log(content);
 		send(content);
 	}
 	if (request.type=="init1") {
@@ -48,5 +51,11 @@ chrome.runtime.onMessage.addListener(function(request, sender,send){
 				chrome.tabs.sendMessage(tabs[0].id,content,function(res){});	
 				console.log(content);
 		});
+	}
+	if(request.type="result"){
+		content['error']=request['error'];
+		content['suc']=request['suc'];
+		console.log(content);
+		chrome.storage.local.set(content,function(){console.log("save successfully")});
 	}
 });

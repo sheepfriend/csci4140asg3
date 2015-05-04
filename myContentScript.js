@@ -41,13 +41,13 @@ chrome.runtime.onMessage.addListener(function(request,sender,send) {
 		//check validation
 		for(i in names){
 			if(request[names[i]]==undefined){
-				send({'error':names[i]+' is empty!','suc':'0'});
+				chrome.runtime.sendMessage({'type':'result','error':names[i]+' is empty!','suc':'0'});
 				return;
 			}
 		}
 		for(i in names_){
 			if(document.getElementById(request[names_[i]])==undefined){
-				send({'error':names_[i]+' not found!','suc':'0'});
+				chrome.runtime.sendMessage({'type':'result','error':names_[i]+' not found!','suc':'0'});
 				return;
 			}
 			console.log(request[names_[i]]);
@@ -71,13 +71,15 @@ chrome.runtime.onMessage.addListener(function(request,sender,send) {
 		if(request['filling']==undefined || request['filling']=='0'){return;}
 		for(i in names){
 			if(request[names[i]]==undefined){
-				send({'error':names[i]+' is empty!','suc':'0'});
+				//send({'error':names[i]+' is empty!','suc':'0'});
+				chrome.runtime.sendMessage({'type':'result','error':names[i]+' is empty!','suc':'0'});
 				return;
 			}
 		}
 		for(i in names_){
 			if(document.getElementById(request[names_[i]])==undefined){
-				send({'error':names_[i]+' not found!','suc':'0'});
+				//send({'error':names_[i]+' not found!','suc':'0'});
+				chrome.runtime.sendMessage({'type':'result','error':names_[i]+' not found!','suc':'0'});
 				return;
 			}
 			console.log(request[names_[i]]);
@@ -98,5 +100,6 @@ chrome.runtime.onMessage.addListener(function(request,sender,send) {
 		if(request.submit_==1){
 			document.getElementById(request.form_id).submit();
 		}
+		chrome.runtime.sendMessage({'type':'result','suc':'1','error':'success'});
     }
 });

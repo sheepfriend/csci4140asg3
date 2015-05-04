@@ -31,13 +31,16 @@ $(function(){
 		for(i in names){
 			$('#'+names[i]).val(resp[names[i]]);
 		}
+		document.getElementById('mess').textContent=resp['error'];
 	})
 	$('#save_').click(function(){
 		document.getElementById('mess').textContent='';
+		console.log(123);
         save_();
     });
 	$('#save_fill').click(function(){
 		document.getElementById('mess').textContent='';
+		console.log(234);
 		save_fill();
 	});
 })
@@ -99,7 +102,7 @@ function fill_() {
 
 
 chrome.runtime.onMessage.addListener(function(res, sender,send){
-	if (res.type=="result" && want==1) {
+	if (res.type=="result") {
 		if(res.suc=='1'){
 			document.getElementById('mess').textContent='succeed!';
 			want=0;
